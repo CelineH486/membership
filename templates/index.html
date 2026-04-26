@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Membership</title>
+</head>
+<body>
+
+<h1>會員系統啟動成功 </h1>
+
+<input type="text" id="name" placeholder="姓名">
+<input type="text" id="email" placeholder="Email">
+<button onclick="register()">註冊</button>
+
+<script>
+function register() {
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+
+    fetch("/api/register", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            name: name,
+            email: email
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+    });
+}
+</script>
+
+</body>
+</html>
