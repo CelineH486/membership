@@ -33,12 +33,25 @@ function register() {
             email: email
         })
     })
-    .then(data => {
-    alert(data.message);
+    .then(res => {
+    return res.json();
+})
+.then(data => {
+    console.log(data);
+
+    if (data.message) {
+        alert(data.message);
+    } else {
+        alert("註冊失敗，後端沒有回傳 message");
+    }
 
     if (data.message === "註冊成功") {
         window.location.href = "/";
     }
+})
+.catch(error => {
+    console.log(error);
+    alert("註冊發生錯誤，請看終端機或 Console");
 });
 }
 </script>

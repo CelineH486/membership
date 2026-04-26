@@ -11,11 +11,6 @@ members_collection = db["members"]
 def home():
     return render_template("index.html")
 
-@app.route("/")
-def home():
-    return render_template("index.html")
-
-
 @app.route("/register-page")
 def register_page():
     return render_template("register.html")
