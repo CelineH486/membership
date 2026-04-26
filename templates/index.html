@@ -11,6 +11,11 @@
 <input type="text" id="email" placeholder="Email">
 <button onclick="register()">註冊</button>
 
+<button onclick="getMembers()">查看會員</button>
+
+<ul id="memberList"></ul>
+
+
 <script>
 function register() {
     const name = document.getElementById("name").value;
