@@ -7,37 +7,33 @@
 
 <h1>會員系統啟動成功 🎉</h1>
 
-<input type="text" id="name" placeholder="姓名">
-<input type="text" id="email" placeholder="Email">
-<button onclick="register()">註冊</button>
+<!-- 🔥 登入區 -->
+<div id="loginBox">
+    <input type="text" id="email" placeholder="Email">
+    <input type="text" id="phone" placeholder="手機">
+    <button onclick="login()">登入</button>
+</div>
+
+<div id="loginResult"></div>
 
 <hr>
 
-<button onclick="getMembers()">查看會員</button>
+<!-- 🔥 註冊按鈕（往下放） -->
+<button onclick="location.href='/register-page'">申請註冊會員</button>
+
+<hr>
+
+<h3>查詢單一會員</h3>
+
+<input type="text" id="searchEmail" placeholder="輸入會員 Email">
+<button onclick="searchMember()">查詢會員</button>
+
+<p id="searchResult"></p>
 
 <h3>會員列表</h3>
 <ul id="memberList"></ul>
 
 <script>
-function register() {
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-
-    fetch("/api/register", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            name: name,
-            email: email
-        })
-    })
-    .then(res => res.json())
-    .then(data => {
-        alert(data.message);
-    });
-}
 
 function getMembers() {
     fetch("/api/members")
@@ -53,6 +49,67 @@ function getMembers() {
         });
     });
 }
+
+function searchMember() {
+    const email = document.getElementById("searchEmail").value;
+
+    fetch("/api/member/search?email=" + email)
+        .then(res => res.json())
+        .then(data => {
+            const result = document.getElementById("searchResult");
+
+            if (data.message) {
+                result.innerText = data.message;
+            } else {
+                result.innerText =
+                    "姓名：" + data.name +
+                    "｜Email：" + data.email +
+                    "｜等級：" + data.level +
+                    "｜點數：" + data.points +
+                    "｜狀態：" + data.status;
+            }
+        });
+}
+
+function login() {
+    const email = document.getElementById("email").value;
+    const phone = document.getElementById("phone").value;
+
+    fetch("/api/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            email: email,
+            phone: phone
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        const result = document.getElementById("loginResult");
+
+        if (data.member) {
+            const member = data.member;
+
+            document.getElementById("loginBox").style.display = "none";
+
+            result.innerHTML = `
+                <h3>登入成功</h3>
+                <p>姓名：${member.name}</p>
+                <p>Email：${member.email}</p>
+                <p>手機：${member.phone}</p>
+                <p>生日：${member.birthday}</p>
+                <p>等級：${member.level}</p>
+                <p>點數：${member.points}</p>
+                <p>狀態：${member.status}</p>
+            `;
+        } else {
+            result.innerHTML = `<p>${data.message}</p>`;
+        }
+    });
+}
+
 </script>
 
 </body>
