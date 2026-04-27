@@ -1,0 +1,59 @@
+body {
+    font-family: Arial, "Microsoft JhengHei", sans-serif;
+    background-color: #f4f6f8;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 420px;
+    margin: 80px auto;
+    background: white;
+    padding: 30px;
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+}
+
+h1 {
+    text-align: center;
+    color: #2f3640;
+    margin-bottom: 30px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 12px;
+    border: none;
+    border-radius: 8px;
+    background-color: #3867d6;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #2d5cc9;
+}
+
+.secondary-btn {
+    background-color: #20bf6b;
+}
+
+.secondary-btn:hover {
+    background-color: #1ba85c;
+}
+
+#loginResult {
+    margin-top: 20px;
+    line-height: 1.8;
+}

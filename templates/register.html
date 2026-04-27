@@ -2,17 +2,23 @@
 <html>
 <head>
     <title>註冊會員</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
-<h2>註冊會員</h2>
+<div class="container">
 
-<input type="text" id="name" placeholder="姓名"><br><br>
-<input type="date" id="birthday"><br><br>
-<input type="text" id="phone" placeholder="手機"><br><br>
-<input type="text" id="email" placeholder="Email"><br><br>
+    <h2 style="text-align:center;">註冊會員</h2>
 
-<button onclick="register()">送出註冊</button>
+    <input type="text" id="name" placeholder="姓名">
+    <input type="date" id="birthday">
+    <input type="text" id="phone" placeholder="手機">
+    <input type="text" id="email" placeholder="Email">
+
+    <button onclick="register()">送出註冊</button>
+    <button class="secondary-btn" onclick="location.href='/'">返回登入</button>
+
+</div>
 
 <script>
 function register() {

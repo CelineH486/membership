@@ -2,9 +2,12 @@
 <html>
 <head>
     <title>Membership</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
+<div class="container"> 
+    
 <h1>會員系統啟動成功 🎉</h1>
 
 <!-- 🔥 登入區 -->
@@ -25,57 +28,9 @@
 
 <hr>
 
-<div id="adminArea">
-
-    <h3>查詢單一會員</h3>
-
-    <input type="text" id="searchEmail" placeholder="輸入會員 Email">
-    <button onclick="searchMember()">查詢會員</button>
-
-    <p id="searchResult"></p>
-
-    <h3>會員列表</h3>
-    <ul id="memberList"></ul>
-
 </div>
 
 <script>
-
-function getMembers() {
-    fetch("/api/members")
-    .then(res => res.json())
-    .then(data => {
-        const list = document.getElementById("memberList");
-        list.innerHTML = "";
-
-        data.forEach(member => {
-            const li = document.createElement("li");
-            li.textContent = member.name + " - " + member.email + " - " + member.level + " - " + member.points + "點";
-            list.appendChild(li);
-        });
-    });
-}
-
-function searchMember() {
-    const email = document.getElementById("searchEmail").value;
-
-    fetch("/api/member/search?email=" + email)
-        .then(res => res.json())
-        .then(data => {
-            const result = document.getElementById("searchResult");
-
-            if (data.message) {
-                result.innerText = data.message;
-            } else {
-                result.innerText =
-                    "姓名：" + data.name +
-                    "｜Email：" + data.email +
-                    "｜等級：" + data.level +
-                    "｜點數：" + data.points +
-                    "｜狀態：" + data.status;
-            }
-        });
-}
 
 function login() {
     const email = document.getElementById("email").value;
@@ -102,8 +57,7 @@ function login() {
 
             document.getElementById("loginBox").style.display = "none";
             document.getElementById("registerBtn").style.display = "none";
-            document.getElementById("adminArea").style.display = "none";
-
+            
             result.innerHTML = `
                 <h3>登入成功</h3>
                 <p>姓名：${member.name}</p>
@@ -130,7 +84,7 @@ window.onload = function () {
 
         document.getElementById("loginBox").style.display = "none";
         document.getElementById("registerBtn").style.display = "none";
-        document.getElementById("adminArea").style.display = "none";
+    
 
         document.getElementById("loginResult").innerHTML = `
             <h3>登入成功</h3>
