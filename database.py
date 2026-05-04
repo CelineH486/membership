@@ -1,6 +1,8 @@
 from pymongo import MongoClient
 
-client = MongoClient("mongodb://admin:123456@localhost:27018")
+# 在 docker-compose 裡，Flask 容器不能用 localhost 連 MongoDB
+# 要用 MongoDB 服務名稱 mongo 當作主機名稱
+client = MongoClient("mongodb://admin:123456@mongo:27017")
 
 db = client["membership_db"]
 

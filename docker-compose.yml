@@ -1,14 +1,63 @@
 services:
-  mongodb:
+
+  mongo:
     image: mongo:7
-    container_name: membership_mongodb
+    # 使用官方 MongoDB 第 7 版映像檔
+
+    container_name: membership-mongo
+    # 設定容器名稱（方便辨識）
+
+    restart: always
+    # 容器如果停止會自動重新啟動
+
     ports:
       - "27018:27017"
+    # 本機 27018 → 對應到容器內 MongoDB 的 27017
+    # 讓你可以從電腦連到 MongoDB
+
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
+      # MongoDB 帳號
+
       MONGO_INITDB_ROOT_PASSWORD: 123456
+      # MongoDB 密碼
+
     volumes:
-      - membership_mongo_data:/data/db
+      - mongo_data:/data/db
+    # 將資料存到 volume（避免容器刪掉資料消失）
+
+
+
+  web:
+    build: .
+    # 用目前資料夾的 Dockerfile 建立 Flask image
+
+    container_name: membership-web
+    # Flask 容器名稱
+
+    restart: always
+    # 自動重啟
+
+    ports:
+      - "5001:5001"
+    # 本機 5001 → 對應容器內 Flask 的 5001
+    # 瀏覽器用這個 port 連線
+
+    depends_on:
+      - mongo
+    # 先啟動 mongo，再啟動 web（順序控制）
+
 
 volumes:
-  membership_mongo_data:
+  mongo_data:
+  # 定義一個 volume，讓 MongoDB 資料永久保存
+
+
+
+# 本系統使用 docker-compose 同時啟動兩個服務：
+# 1. MongoDB：負責資料儲存，並透過 volume 確保資料持久化
+# 2. Flask Web：負責後端 API 與網頁服務
+#
+# 兩個服務透過 Docker 網路互相連線，
+# Flask 透過服務名稱 mongo 連接資料庫，
+# 並透過 port mapping 對外提供服務
