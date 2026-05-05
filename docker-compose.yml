@@ -5,7 +5,7 @@ services:
     # 使用官方 MongoDB 第 7 版映像檔
 
     container_name: membership-mongo
-    # 設定容器名稱（方便辨識）
+    # 設定容器名稱
 
     restart: always
     # 容器如果停止會自動重新啟動

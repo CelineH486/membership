@@ -1,3 +1,6 @@
+# 負責資料驗證、登入判斷、註冊規則，不直接操作資料庫
+
+
 from repositories.member_repository import (
     get_all_members,
     find_member_by_email,
@@ -7,7 +10,7 @@ from repositories.member_repository import (
 )
 
 
-# 取得全部會員
+# 取得全部會員資料
 def get_members_service():
     return get_all_members()
 
@@ -34,7 +37,7 @@ def login_service(data):
     if not email or not phone:
         return {"message": "請輸入 Email 和手機"}, 400
 
-    # 到資料庫比對
+    # 呼叫 Repository 比對資料庫裡是否有符合的會員
     member = find_member_by_email_and_phone(email, phone)
 
     if member:
@@ -80,3 +83,6 @@ def register_service(data):
     create_member(member)
 
     return {"message": "註冊成功"}, 200
+
+
+# Service = 處理商業邏輯（驗證、判斷、流程控制）

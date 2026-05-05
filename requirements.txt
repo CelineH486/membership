@@ -1,2 +1,5 @@
-flask
-pymongo
+# 列出本專案所需的 Python 套件（Flask、pymongo），供 Docker 或環境安裝使用
+
+
+flask # 用於建立網站與 API，負責處理請求、回應與頁面顯示
+pymongo # 用於連接 MongoDB，負責資料的查詢與儲存

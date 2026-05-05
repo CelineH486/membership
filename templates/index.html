@@ -1,3 +1,5 @@
+<!-- 登入流程：登入 → 呼叫 API → 顯示會員資料 → 控制畫面狀態 -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,20 +10,22 @@
 
 <div class="container"> 
     
-<h1>會員系統啟動成功 🎉</h1>
+<h1>會員系統啟動成功 </h1>
 
-<!-- 🔥 登入區 -->
+<!-- 登入區 -->
+<!-- 登入輸入區（Email + 手機 + 按鈕） -->
 <div id="loginBox">
     <input type="text" id="email" placeholder="Email">
     <input type="text" id="phone" placeholder="手機">
     <button onclick="login()">登入</button>
 </div>
 
+<!-- 顯示登入結果（成功或失敗） -->
 <div id="loginResult"></div>
 
 <hr>
 
-<!-- 🔥 註冊按鈕（往下放） -->
+<!-- 註冊按鈕（往下放） -->
 <div id="registerBtn">
     <button onclick="location.href='/register-page'">申請註冊會員</button>
 </div>
@@ -32,10 +36,12 @@
 
 <script>
 
+// 登入功能：收集資料 → 呼叫 API → 處理回傳
 function login() {
     const email = document.getElementById("email").value;
     const phone = document.getElementById("phone").value;
 
+    // 呼叫後端 API（/api/login）
     fetch("/api/login", {
         method: "POST",
         headers: {
@@ -50,14 +56,18 @@ function login() {
     .then(data => {
         const result = document.getElementById("loginResult");
 
+        // 如果登入成功（後端回傳 member）
         if (data.member) {
             const member = data.member;
 
+            // 儲存登入狀態（localStorage）
             localStorage.setItem("member", JSON.stringify(data.member));
 
+            // 隱藏登入區與註冊按鈕
             document.getElementById("loginBox").style.display = "none";
             document.getElementById("registerBtn").style.display = "none";
             
+            // 顯示會員資料
             result.innerHTML = `
                 <h3>登入成功</h3>
                 <p>姓名：${member.name}</p>
@@ -71,21 +81,25 @@ function login() {
                 <button onclick="logout()">登出</button>
             `;
         } else {
+            // 登入失敗顯示錯誤訊息
             result.innerHTML = `<p>${data.message}</p>`;
         }
     });
 }
 
+// 頁面載入時自動檢查是否已登入（localStorage）
 window.onload = function () {
     const saved = localStorage.getItem("member");
 
     if (saved) {
         const member = JSON.parse(saved);
 
+        // 隱藏登入區與註冊按鈕
         document.getElementById("loginBox").style.display = "none";
         document.getElementById("registerBtn").style.display = "none";
     
 
+        // 顯示已登入會員資料
         document.getElementById("loginResult").innerHTML = `
             <h3>登入成功</h3>
             <p>姓名：${member.name}</p>
@@ -101,6 +115,7 @@ window.onload = function () {
     }
 };
 
+// 登出功能：清除登入狀態並重新整理頁面
 function logout() {
     localStorage.removeItem("member");
     location.reload();

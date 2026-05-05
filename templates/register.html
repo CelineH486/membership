@@ -1,3 +1,6 @@
+<!-- 註冊頁 + 呼叫 API -->
+<!-- 收集使用者資料 → 呼叫 /api/register → 顯示結果 -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,6 +24,7 @@
 </div>
 
 <script>
+    // 收集資料 → 呼叫 API → 處理回傳
 function register() {
     const name = document.getElementById("name").value;
     const birthday = document.getElementById("birthday").value;
@@ -64,3 +68,5 @@ function register() {
 
 </body>
 </html>
+
+<!-- 這頁是前端，負責把資料送到 /api/register，後端才是真的在處理註冊 -->
